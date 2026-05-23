@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using TourPlanner.Repositories;
+using TourPlanner.Services;
 
 namespace TourPlanner;
 
@@ -14,7 +16,12 @@ public class Program
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
 
+        builder.Services.AddScoped<UserRepository>();
+        builder.Services.AddScoped<UserService>();
+
+
         builder.Services.AddDbContext<AppDBC>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
+        builder.Services.AddControllers();
         
         var app = builder.Build();
 
@@ -33,7 +40,8 @@ public class Program
             }
         }
 
-        app.UseHttpsRedirection();
+        app.MapControllers();        
+        // app.UseHttpsRedirection();
 
         app.UseAuthorization();
         

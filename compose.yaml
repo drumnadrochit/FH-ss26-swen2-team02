@@ -10,11 +10,10 @@
       - 5432:5432
   
   tour-planner:
-    image: tour-planner
     depends_on:
       - database
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 8080:8080
+      - 2404:8080

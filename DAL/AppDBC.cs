@@ -6,6 +6,7 @@ namespace TourPlanner;
 public class AppDBC : DbContext
 {
     public DbSet<Tour> Tours { get; set; }
+    public DbSet<User> Users { get; set; }
 
 
     public AppDBC(DbContextOptions<AppDBC> options) : base(options)
