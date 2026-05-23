@@ -1,0 +1,20 @@
+﻿services:
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: tpsu
+      POSTGRES_PASSWORD: 2305
+      POSTGRES_DB: TourPlanner
+    ports:
+      - 5432:5432
+  
+  tour-planner:
+    image: tour-planner
+    depends_on:
+      - database
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
