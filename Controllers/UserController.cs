@@ -16,9 +16,18 @@ public class AuthController : ControllerBase
         _userService = userService;
     }
 
-    [HttpGet("login")]
-    public async Task<ActionResult> Get()
+    [HttpPost("login")]
+    public async Task<ActionResult> Get([FromBody] CredentialsDTO credentials)
     {
+        try
+        {
+            var user = await _userService.LoginUser(credentials.Username, credentials.Password);
+            return Ok(user.Id);
+        }
+        catch (Exception e)
+        {
+            return Conflict("Username or password is incorrect");
+        }
         return Ok("you are logged in");
     }
     

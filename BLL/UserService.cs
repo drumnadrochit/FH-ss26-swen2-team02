@@ -29,7 +29,16 @@ public class UserService
 
         try
         {
-            await _userRepository.AddUser(user);
+            var duplicate =  await _userRepository.GetUserByUsername(username);
+            if (duplicate == null)
+            {
+                await _userRepository.AddUser(user);
+                
+            }
+            else
+            {
+                throw new Exception($"User with username '{username}' already exists.");
+            }
         }
         catch (Exception e)
         {
@@ -37,5 +46,25 @@ public class UserService
         }
         
         return user;
+    }
+
+    public async Task<User> LoginUser(string username, string password)
+    {
+        var user = new User { Username = username, Password = password };
+
+        try
+        {
+            var match = await _userRepository.GetUserByUsername(username);
+            if (match == null) throw new Exception($"User with username '{username}' does not exist.");
+            if (!match.Password.Equals(password))
+                throw new Exception($"User with username '{username}' does not match password.");
+
+            return user;
+        }
+        catch (Exception e)
+        {
+            throw new Exception($"User with username '{username}' does not exist.", e);
+        }
+        
     }
 }
