@@ -1,7 +1,7 @@
 ﻿services:
   database:
     image: postgres
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_USER: tpsu
       POSTGRES_PASSWORD: 2305
@@ -10,10 +10,11 @@
       - 5432:5432
   
   tour-planner:
+    restart: unless-stopped
     depends_on:
       - database
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 2404:8080
+      - 8080:8080

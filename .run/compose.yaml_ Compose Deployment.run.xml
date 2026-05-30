@@ -3,12 +3,16 @@
     <deployment type="docker-compose.yml">
       <settings>
         <option name="removeVolumesOnComposeDown" value="true" />
+        <option name="commandLineOptions" value="--build" />
         <option name="sourceFilePath" value="compose.yaml" />
+        <option name="upAlwaysRecreate" value="true" />
+        <option name="upDetach" value="false" />
+        <option name="upForceRecreate" value="true" />
+        <option name="upRemoveOrphans" value="true" />
+        <option name="upRenewAnonVolumes" value="true" />
       </settings>
     </deployment>
     <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
-    <method v="2">
-      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Dockerfile" run_configuration_type="docker-deploy" />
-    </method>
+    <method v="2" />
   </configuration>
 </component>
