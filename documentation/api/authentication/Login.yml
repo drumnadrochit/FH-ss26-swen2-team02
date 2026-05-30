@@ -4,8 +4,15 @@ info:
   seq: 2
 
 http:
-  method: GET
+  method: POST
   url: "{{host}}/api/auth/login"
+  body:
+    type: json
+    data: |-
+      {
+        "Username":"Vukbo",
+        "Password":"2000"
+      }
   auth: inherit
 
 settings:
