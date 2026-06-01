@@ -1,4 +1,12 @@
-﻿namespace TourPlanner.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TourPlanner.Entities;
+
+public enum TransportTypes
+{
+    Hike,
+    Bike
+}
 
 public class Tour
 {
@@ -6,6 +14,15 @@ public class Tour
     /// PK
     /// </summary>
     public int Id { get; set; }
+    
+    public User User { get; set; }
+    
+    /// <summary>
+    /// FK -> User
+    /// </summary>
+    [ForeignKey(nameof(User))]
+    public int UserId { get; set; }
+    
     /// <summary>
     /// Name of the tour
     /// </summary>
@@ -25,7 +42,7 @@ public class Tour
     /// <summary>
     /// Transportation type used, eg. walking or biking
     /// </summary>
-    public int TransportType { get; set; }
+    public TransportTypes TransportType { get; set; }
     /// <summary>
     /// Estimated distance of the route, in km.
     /// </summary>
@@ -33,5 +50,5 @@ public class Tour
     /// <summary>
     /// Estimated time of the route, in h.
     /// </summary>
-    public float Time { get; set; }
+    public float Duration { get; set; }
 }

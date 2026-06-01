@@ -11,29 +11,41 @@ public class TourRepository : BaseRepository
         
     }
     
-    public async Task<IEnumerable<Tour>> GetAllTours(string username)
+    public async Task<List<Tour>> GetAllTours(int userId)
     {
-        // return await dbc.Tours.AsNoTracking().Where(t => t.)
-        throw new NotImplementedException();
+        return  await dbc.Tours.Where(t => t.UserId == userId).ToListAsync();
     }
 
-    public Task<Tour?> GetTourById(string username, int id)
+    public async Task<Tour?> GetTourById(int userId, int id)
     {
-        throw new NotImplementedException();
+        return await dbc.Tours.Where(t => t.UserId == userId && t.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task AddTour(string username, Tour tour)
+    public async Task<Tour> AddTour( Tour tour)
     {
-        throw new NotImplementedException();
+        await dbc.Tours.AddAsync(tour);
+        await dbc.SaveChangesAsync();
+        return tour;
     }
 
-    public Task UpdateTour(string username, Tour tour)
+    public async Task<Tour> UpdateTour(Tour tour)
     {
-        throw new NotImplementedException();
+        dbc.Tours.Update(tour);
+        await dbc.SaveChangesAsync();
+        return tour;
     }
 
-    public Task<bool> DeleteTour(string username, Tour tour)
+    public async Task DeleteTour(int tourid)
     {
-        throw new NotImplementedException();
+        var tour = await dbc.Tours.FindAsync(tourid);
+        
+        if (tour == null)
+        {
+            throw new Exception("Tour not found");
+        }
+        
+        dbc.Tours.Remove(tour);
+        await dbc.SaveChangesAsync();
+
     }
 }
