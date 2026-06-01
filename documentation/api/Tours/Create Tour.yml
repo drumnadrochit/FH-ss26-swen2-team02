@@ -1,0 +1,26 @@
+info:
+  name: Create Tour
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{host}}/api/tours"
+  body:
+    type: json
+    data: |-
+      { 
+        "UserId": 1,
+        "Name":"Barmbeker Rundgang",
+        "Description":"Ein kleiner Rundgang der zum entdecken einlädt. Erkunde Barmbeks schönste Ecken.",
+        "From": "Barmbeckstraße 12",
+        "To": "Lat: 1- Long: 12",
+        "TransportType": 0
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
