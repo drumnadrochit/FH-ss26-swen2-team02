@@ -17,12 +17,12 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult> Get([FromBody] CredentialsDTO credentials)
+    public async Task<ActionResult> Login([FromBody] CredentialsDTO credentials)
     {
         try
         {
-            var user = await _userService.LoginUser(credentials.Username, credentials.Password);
-            return Ok(user.Id);
+            var token = await _userService.LoginUser(credentials.Username, credentials.Password);
+            return Ok(token);
         }
         catch (Exception e)
         {

@@ -1,15 +1,21 @@
-﻿using TourPlanner.Entities;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using TourPlanner.Entities;
 using TourPlanner.Repositories;
+using Microsoft.IdentityModel.Tokens;
 
 namespace TourPlanner.Services;
 
 public class UserService
 {
     private readonly UserRepository _userRepository;
-
-    public UserService(UserRepository userRepository)
+    private readonly IConfiguration _configurationManager;
+    
+    public UserService(UserRepository userRepository, IConfiguration configurationManager)
     {
         _userRepository = userRepository;
+        _configurationManager = configurationManager;
     }
     
     public async Task<User> GetUserByUsername(string username)
@@ -48,7 +54,7 @@ public class UserService
         return user;
     }
 
-    public async Task<User> LoginUser(string username, string password)
+    public async Task<string> LoginUser(string username, string password)
     {
         var user = new User { Username = username, Password = password };
 
@@ -59,7 +65,23 @@ public class UserService
             if (!match.Password.Equals(password))
                 throw new Exception($"User with username '{username}' does not match password.");
 
-            return user;
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, match.Username),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            };
+            
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configurationManager["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            
+            var token = new JwtSecurityToken(
+                issuer: _configurationManager["Jwt:Issuer"],
+                audience: _configurationManager["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: creds);
+            
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
         catch (Exception e)
         {
