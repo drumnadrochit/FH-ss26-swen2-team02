@@ -10,7 +10,6 @@ http:
     type: json
     data: |-
       { 
-        "UserId": 1,
         "Name":"Barmbeker Rundgang",
         "Description":"Ein kleiner Rundgang der zum entdecken einlädt. Erkunde Barmbeks schönste Ecken.",
         "From": "Barmbeckstraße 12",

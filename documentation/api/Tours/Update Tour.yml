@@ -1,0 +1,25 @@
+info:
+  name: Update Tour
+  type: http
+  seq: 4
+
+http:
+  method: PUT
+  url: "{{host}}/api/tours/1"
+  body:
+    type: json
+    data: |-
+      { 
+        "Name":"Barmbeker Spaziergang",
+        "Description":"Ein kleiner Rundgang der zum entdecken einlädt. Erkunde Barmbeks schönste Ecken. Entdecke Läden, Restaurants und unbezahlbare Erlebnisse.",
+        "From": "Barmbeckstraße 13",
+        "To": "Lat: 1- Long: 13",
+        "TransportType": 0
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
