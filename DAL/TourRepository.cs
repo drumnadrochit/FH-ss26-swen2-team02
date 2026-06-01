@@ -18,7 +18,7 @@ public class TourRepository : BaseRepository
 
     public async Task<Tour?> GetTourById(int userId, int id)
     {
-        return await dbc.Tours.Where(t => t.UserId == userId && t.Id == id).FirstOrDefaultAsync();
+        return await dbc.Tours.Include(t => t.User).Where(t => t.UserId == userId && t.Id == id).FirstOrDefaultAsync();
     }
 
     public async Task<Tour> AddTour( Tour tour)
@@ -35,9 +35,9 @@ public class TourRepository : BaseRepository
         return tour;
     }
 
-    public async Task DeleteTour(int tourid)
+    public async Task DeleteTour(int tourId, int userId)
     {
-        var tour = await dbc.Tours.FindAsync(tourid);
+        var tour = await dbc.Tours.Where(t => t.Id == tourId && t.UserId == userId ).FirstOrDefaultAsync();
         
         if (tour == null)
         {

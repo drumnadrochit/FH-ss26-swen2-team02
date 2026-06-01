@@ -67,7 +67,7 @@ public class UserService
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, match.Username),
+                new Claim(ClaimTypes.Name, match.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
             

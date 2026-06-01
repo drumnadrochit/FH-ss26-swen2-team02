@@ -23,31 +23,42 @@ public class TourService
         this.mapper = mapper;
     }
 
-    public async Task<TourDTO> AddTour(TourDTO tour)
+    public async Task<TourDTO> AddTour(int userId, TourDTO tour)
     {
+        tour.UserId = userId;
+        
         var t = mapper.Map<Tour>(tour);
         var tourReturn = await tourRepository.AddTour(t);
         var dto = mapper.Map<TourDTO>(tourReturn);
         return  dto;
     }
 
-    public async Task<Tour?> GetTour(int tourId, int userId)
+    public async Task<TourDTO?> GetTour(int tourId, int userId)
     {
-        return await tourRepository.GetTourById(userId, tourId);
+        var t = await tourRepository.GetTourById(userId, tourId);
+        var dto = mapper.Map<TourDTO>(t);
+        return dto;
     }
 
-    public async Task<List<Tour>> GetTours(int userId)
+    public async Task<List<TourDTO>> GetTours(int userId)
     {
-        return await tourRepository.GetAllTours(userId);
+        var tours = await tourRepository.GetAllTours(userId);
+        var dto = mapper.Map<List<TourDTO>>(tours);
+        return dto;
     }
 
-    public async Task<Tour> UpdateTour(Tour tour)
+    public async Task<TourDTO> UpdateTour(TourDTO tour, int tourId, int userId)
     {
-        return await tourRepository.UpdateTour(tour);        
+        tour.Id = tourId;
+        tour.UserId = userId;
+        var t = mapper.Map<Tour>(tour);
+        var tNew = await tourRepository.UpdateTour(t);
+        var dto = mapper.Map<TourDTO>(tNew);
+        return dto;        
     }
 
-    public async Task DeleteTour(int tourId)
+    public async Task DeleteTour(int tourId, int userId)
     { 
-        await tourRepository.DeleteTour(tourId);
+        await tourRepository.DeleteTour(tourId,userId);
     }
 }

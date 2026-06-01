@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TourPlanner.API.DTO;
 using TourPlanner.Services;
@@ -17,12 +18,17 @@ public class ToursController : ControllerBase
     this.tourService = tourService;
   }
 
+  private int GetUserIdFromToken()
+  {
+    return int.Parse(User.FindFirstValue(ClaimTypes.Name));
+  }
+  
   [HttpPost("")]
   public async Task<ActionResult> CreateTour([FromBody] TourDTO tour)
   {
     try
     {
-      var t = await tourService.AddTour(tour);
+      var t = await tourService.AddTour(GetUserIdFromToken() ,tour);
       return Ok(t);
 
     }
@@ -33,36 +39,62 @@ public class ToursController : ControllerBase
   }
   
   [HttpGet("{id}")]
-  public async Task<ActionResult> GetTour([FromQuery] int id)
+  public async Task<ActionResult> GetTour(int id)
   {
-    return Conflict("Not Implemented");
-    
-    throw new NotImplementedException("Tours not implemented yet.");
+    try
+    {
+      var t = await tourService.GetTour(id, GetUserIdFromToken());
+      return Ok(t);
+    }
+    catch (Exception e)
+    {
+      return Conflict("Not Implemented");
+    }
   }
   
   
   [HttpGet("")]
   public async Task<ActionResult> GetTours()
   {
-    return Conflict("Not Implemented");
-    
-    throw new NotImplementedException("Tours not implemented yet.");
+    try
+    {
+      var tours = await tourService.GetTours(GetUserIdFromToken());
+      return Ok(tours);
+    }
+    catch (Exception e)
+    {
+      return Conflict(e.Message);
+    }
   }
   
   [HttpPut("{id}")]
-  public async Task<ActionResult> UpdateTour([FromQuery] int id)
+  public async Task<ActionResult> UpdateTour([FromBody] TourDTO tour, int id)
   {
-    return Conflict("Not Implemented");
+    try
+    {
+      var t = await tourService.UpdateTour(tour, id, GetUserIdFromToken());
+      return Ok(t);
+    }
+    catch (Exception e)
+    {
+      return Conflict(e.Message);
+    }
     
-    throw new NotImplementedException("Tours not implemented yet.");
   }
 
   [HttpDelete("{id}")]
-  public async Task<ActionResult> DeleteTour([FromQuery] int id)
+  public async Task<ActionResult> DeleteTour(int id)
   {
-    return Conflict("Not Implemented");
+    try
+    {
+      await tourService.DeleteTour(id, GetUserIdFromToken());
+      return Ok();
+    }
+    catch (Exception e)
+    {
+      return Conflict(e);
+    }
     
-    throw new NotImplementedException("Tours not implemented yet.");
   }
 
   

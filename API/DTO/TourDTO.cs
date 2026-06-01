@@ -8,6 +8,8 @@ namespace TourPlanner.API.DTO;
 
 public class TourDTO
 {
+    public int? Id {get; set;}
+    
     [Required]
     public required string Name {get; set;}
     
@@ -19,8 +21,8 @@ public class TourDTO
     [Required]
     public string To {get; set;}
     
-    [Required]
-    public int UserId { get; set; }
+    
+    public int? UserId { get; set; }
     
     [Required]
     public TransportTypes TransportType {get; set;}
