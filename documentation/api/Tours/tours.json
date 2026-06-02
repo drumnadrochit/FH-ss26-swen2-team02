@@ -1,0 +1,24 @@
+[
+  {
+    "Id": 1,
+    "Name": "Barmbeker Spaziergang",
+    "Description": "Ein kleiner Rundgang der zum entdecken einlädt. Erkunde Barmbeks schönste Ecken. Entdecke Läden, Restaurants und unbezahlbare Erlebnisse.",
+    "From": "Barmbeckstraße 13",
+    "To": "Lat: 1- Long: 13",
+    "UserId": 1,
+    "TransportType": 0,
+    "Distance": 0,
+    "Duration": 0
+  },
+  {
+    "Id": 2,
+    "Name": "Barmbeker Rundgang",
+    "Description": "Ein kleiner Rundgang der zum entdecken einlädt. Erkunde Barmbeks schönste Ecken.",
+    "From": "Barmbeckstraße 12",
+    "To": "Lat: 1- Long: 12",
+    "UserId": 1,
+    "TransportType": 0,
+    "Distance": 0,
+    "Duration": 0
+  }
+]

@@ -47,6 +47,29 @@ public class TourService
         return dto;
     }
 
+    /// <summary>
+    /// TODO this should also export associated tour logs
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    public async Task<List<TourDTO>> ExportTours(int userId)
+    {
+        var tours = await tourRepository.GetAllTours(userId);
+        var dto = mapper.Map<List<TourDTO>>(tours);
+        return dto;
+    }
+
+    public async Task ImportTours(List<TourDTO> tours, int userId)
+    {
+        foreach (var dto in tours)
+        {
+            dto.Id = null;
+            dto.UserId = userId;
+            var tour = mapper.Map<Tour>(dto);
+            await tourRepository.AddTour(tour);
+        }
+    }
+    
     public async Task<TourDTO> UpdateTour(TourDTO tour, int tourId, int userId)
     {
         tour.Id = tourId;

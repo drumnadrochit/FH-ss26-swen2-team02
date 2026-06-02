@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TourPlanner.API.DTO;
@@ -53,6 +54,7 @@ public class ToursController : ControllerBase
   }
   
   
+  
   [HttpGet("")]
   public async Task<ActionResult> GetTours()
   {
@@ -82,6 +84,43 @@ public class ToursController : ControllerBase
     
   }
 
+  [HttpGet("export")]
+  public async Task<ActionResult> ExportTours()
+  {
+    try
+    {
+      var tours = await tourService.ExportTours(GetUserIdFromToken());
+      var jsonBytes = JsonSerializer.SerializeToUtf8Bytes(tours);
+      return File(jsonBytes, "application/json", "tours.json");
+    }catch(Exception e)
+    {
+      return Conflict(e.Message);
+    }
+  }
+
+  [HttpPost("import")]
+  public async Task<ActionResult> ImportTours(IFormFile file)
+  {
+    
+    try
+    {
+      if (file == null || file.Length == 0)
+        throw new Exception("No file uploaded!");
+
+      using var stream = new StreamReader(file.OpenReadStream());
+      string jsonContent = await stream.ReadToEndAsync();
+      
+      var tours = JsonSerializer.Deserialize<List<TourDTO>>(jsonContent);
+      await tourService.ImportTours(tours, GetUserIdFromToken());
+          
+      return Ok("Successfully imported tours");
+    }
+    catch (Exception e)
+    {
+      return Conflict(e.Message);
+    }
+  }
+  
   [HttpDelete("{id}")]
   public async Task<ActionResult> DeleteTour(int id)
   {
