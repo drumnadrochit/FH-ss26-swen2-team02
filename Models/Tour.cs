@@ -17,6 +17,9 @@ public class Tour
     
     public User User { get; set; }
     
+    public ICollection<TourLog> Logs { get; set; }
+    
+    
     /// <summary>
     /// FK -> User
     /// </summary>
