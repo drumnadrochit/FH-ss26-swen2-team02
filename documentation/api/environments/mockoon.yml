@@ -1,0 +1,4 @@
+name: mockoon
+variables:
+  - name: host
+    value: http://localhost:2407
