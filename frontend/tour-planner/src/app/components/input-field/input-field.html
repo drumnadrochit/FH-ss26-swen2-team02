@@ -1,0 +1,14 @@
+<div class="flex flex-col gap-2">
+  <div class="flex justify-between items-baseline px-2">
+    <p class="text-sm text-gray-400 ">{{ label() }} @if (required()) {*} </p>
+    @if(isInvalid())
+    {
+      @for (error of errors() ; track error.message) {
+        <p class="text-xs text-red-400">{{ error.message }}</p>
+
+      }
+
+    }
+  </div>
+  <input [class]="'bg-gray-100 rounded-xl p-3 hover:bg-gray-200 focus:outline-gray-500 focus:outline-2 ' + (isInvalid() ? 'focus:outline-red-300 outline-red-400 outline-2' : '') " [type]="type()" [placeholder]="placeholder()" [value]="value()" (input)="value.set($event.target!.value)"   />
+</div>
