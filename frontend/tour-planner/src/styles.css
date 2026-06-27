@@ -13,6 +13,13 @@ body
 
 }
 
+.ms-regular {
+               font-family: "Chivo Mono", monospace;
+               font-optical-sizing: auto;
+               font-weight: 300;
+               font-style: normal;
+             }
+
 .fredoka {
             font-family: "Fredoka", sans-serif;
             font-optical-sizing: auto;
@@ -21,3 +28,12 @@ body
             font-variation-settings:
             "wdth" 100;
           }
+
+.fredoka-light {
+  font-family: "Fredoka", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 350;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
