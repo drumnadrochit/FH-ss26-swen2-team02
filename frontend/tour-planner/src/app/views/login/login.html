@@ -1,0 +1,23 @@
+<form [formRoot]="loginForm" >
+  <div class="w-full min-h-dvh flex items-center justify-center">
+
+<div class="flex flex-col gap-6 shadow-xl grow max-w-md p-3 rounded-2xl min-h-100">
+  <div class="flex place-content-between items-center px-3">
+    <h1 class="text-gray-400">Login</h1>
+    <a class="text-gray-400 underline text-right text-xs" href="/register">Already registered? <br /> Login over here.</a>
+  </div>
+  <hr class="text-gray-200 border-1" />
+    <div class="flex flex-col gap-3 grow">
+  <input-field label="Username" placeholder="Username" [formField]="loginForm.username"> </input-field>
+  <input-field label="Password" placeholder="********" type="password" [formField]="loginForm.password"> </input-field>
+
+  </div>
+  @for (error of  loginForm().errors(); track error.message) {
+    <info-card [message]="error.message!"></info-card>
+
+  }
+  <input-button [loading]="loginForm().submitting()" label="Login" [disabled]="!isValid()" ></input-button>
+</div>
+  </div>
+
+</form>
