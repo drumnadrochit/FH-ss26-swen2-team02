@@ -13,7 +13,7 @@ public class TourLog
 
     public Tour Tour { get; set; }
     public int TourId { get; set; }
-    public DateTime CreationTime { get; set; }
+    public DateTime CreationTime { get; set; } = DateTime.UtcNow;
     public string Comment  { get; set; }
     public Difficulty Difficulty { get; set; }
     public float Distance { get; set; }

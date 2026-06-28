@@ -29,17 +29,16 @@ public class TourLogRepository : BaseRepository
         return tourLog;
     }
 
-    public async Task DeleToursteTourLog(int tourLogId, int tourId)
+    public async Task DeleteTourLog(int tourLogId, int tourId)
     {
-        var tour = await dbc.Tours.Where(t => t.Id == tourId && t.UserId == tourId ).FirstOrDefaultAsync();
+        var tourLog = await dbc.TourLogs.Where(t => t.Id == tourLogId && t.TourId == tourId ).FirstOrDefaultAsync();
         
-        if (tour == null)
+        if (tourLog == null)
         {
             throw new Exception("TourLog not found");
         }
         
-        dbc.Tours.Remove(tour);
+        dbc.TourLogs.Remove(tourLog);
         await dbc.SaveChangesAsync();
     }
-    
 }
