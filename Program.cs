@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using TourPlanner.DAL;
 using TourPlanner.Repositories;
 using TourPlanner.Services;
 
@@ -32,7 +33,7 @@ public class Program
                 ValidAudience = builder.Configuration.GetSection("Jwt:Audience").Value,
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
-            };
+            }; 
 
             options.Events = new JwtBearerEvents
             {
@@ -56,6 +57,9 @@ public class Program
         builder.Services.AddScoped<UserService>();
         builder.Services.AddScoped<TourRepository>();
         builder.Services.AddScoped<TourService>();
+
+        builder.Services.AddScoped<TourLogRepository>();
+        builder.Services.AddScoped<TourLogService>();
 
 
         builder.Services.AddDbContext<AppDBC>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
