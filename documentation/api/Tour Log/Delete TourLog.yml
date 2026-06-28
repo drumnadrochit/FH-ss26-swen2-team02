@@ -1,0 +1,21 @@
+info:
+  name: Delete TourLog
+  type: http
+  seq: 2
+
+http:
+  method: DELETE
+  url: "{{host}}/api/tourlog/delete/7"
+  body:
+    type: json
+    data: |-
+      {
+        "tourId" : 3
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
