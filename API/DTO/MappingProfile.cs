@@ -8,6 +8,6 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<TourDTO, Tour>().ReverseMap();
-
+        CreateMap<TourLogDTO, TourLog>().ReverseMap();
     }
 }
