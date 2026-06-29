@@ -5,12 +5,12 @@ info:
 
 http:
   method: POST
-  url: "{{host}}/api/tourlog"
+  url: "{{host}}/api/logs"
   body:
     type: json
     data: |-
       {
-        "tourId": 6,
+        "tourId": 3,
         "comment": "Wunderschöne Wanderung, aber anstrengend!",
         "difficulty": 3,
         "distance": 12.5,

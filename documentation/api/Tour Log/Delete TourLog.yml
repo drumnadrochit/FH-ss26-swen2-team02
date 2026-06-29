@@ -1,11 +1,11 @@
 info:
   name: Delete TourLog
   type: http
-  seq: 2
+  seq: 3
 
 http:
   method: DELETE
-  url: "{{host}}/api/tourlog/delete/7"
+  url: "{{host}}/api/logs/1"
   body:
     type: json
     data: |-

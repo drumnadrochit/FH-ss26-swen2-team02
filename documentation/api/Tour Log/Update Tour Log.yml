@@ -1,16 +1,16 @@
 info:
   name: Update Tour Log
   type: http
-  seq: 3
+  seq: 2
 
 http:
   method: PUT
-  url: "{{host}}/api/tourlog/update/9"
+  url: "{{host}}/api/logs/2"
   body:
     type: json
     data: |-
       {
-        "tourId": 6,
+        "tourId": 3,
         "comment": "Wunderschöne Wanderung, aber anstrengend! Aber dafuer sehr sehr cool!",
         "difficulty": 3,
         "distance": 12.5,
