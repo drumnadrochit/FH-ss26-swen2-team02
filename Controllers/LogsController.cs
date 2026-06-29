@@ -10,11 +10,11 @@ namespace TourPlanner.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class TourLogController : ControllerBase
+    public class LogsController : ControllerBase
     {
         private readonly TourLogService _tourLogService;
 
-        public TourLogController(TourLogService service)
+        public LogsController(TourLogService service)
         {
             _tourLogService = service;
         }
@@ -30,11 +30,11 @@ namespace TourPlanner.Controllers
             catch (Exception ex)
             {
                 // Sauber: Nur die Nachricht als JSON-Objekt zurückgeben
-                return BadRequest(new { error = ex.Message });
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpPut("update/{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult> UpdateTourLog([FromBody] TourLogDTO tourLog, int id)
         {
             try
@@ -48,7 +48,7 @@ namespace TourPlanner.Controllers
             }
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteTourLog(int id, [FromBody] TourLogDeleteDTO tourId)
         {
             try
@@ -62,8 +62,5 @@ namespace TourPlanner.Controllers
                 return Conflict(new { error = ex.Message });
             }
         }
-        
-        
-        
     }
 }
