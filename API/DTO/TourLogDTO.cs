@@ -10,7 +10,7 @@ public class TourLogDTO
 
     public string Comment { get; set; }
 
-    public Difficulty Difficulty { get; set; }
+    public int Difficulty { get; set; }
 
     public float Distance { get; set; }
 
