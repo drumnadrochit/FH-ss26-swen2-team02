@@ -1,0 +1,23 @@
+<div class="flex flex-col  h-full w-75 p-2 border-1 rounded-md gap-3 border-gray-200">
+  <input-field (valueChange)="onValueChanged($event)"  [type]="InputType.search" placeholder="Search tour logs"></input-field>
+    @if(logs().length == 0){
+      <div class="flex items-center h-full justify-center">
+        <p class="text-center text-sm text-gray-400"> No tour logs available yet. <br> Add new log entry. </p>
+      </div>
+    }@else {
+      <div class="flex flex-col pr-2 gap-2 h-full overflow-y-scroll ">
+        @if(filteredLogs().length == 0)
+        {
+          @for (log of logs() ; track log) {
+            <app-log-list-element [log]="log"></app-log-list-element>
+          }
+
+        } @else {
+          @for (log of filteredLogs() ; track log) {
+            <app-log-list-element [log]="log"></app-log-list-element>
+          }
+        }
+      </div>
+    }
+  <input-button [buttonType]="ButtonType.secondary" label="Add Log"></input-button>
+</div>

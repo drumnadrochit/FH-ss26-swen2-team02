@@ -1,17 +1,25 @@
+import * as L from 'leaflet';
+
 export enum TourType {
-  Hike="hike",
-  Bike="bike",
+  Hike="foot-hiking",
+  Bike="cycling-regular",
+}
+
+export interface Location {
+  latitude: number;
+  longitude: number;
+  address: string;
 }
 
 export interface TourModel {
   id: number;
   title: string
   type: TourType
-  description?: string
+  description: string
   distance: number
   duration: number
-  from: string;
-  to: string;
+  from: Location;
+  to: Location;
   logs: TourLogModel[]
 }
 

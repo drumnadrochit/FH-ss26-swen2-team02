@@ -21,6 +21,8 @@
 
     <ItemGroup>
       <Folder Include="API\Services\" />
+      <Folder Include="documentation\mockups\" />
+      <Folder Include="frontend\tour-planner\src\app\views\" />
     </ItemGroup>
 
 </Project>

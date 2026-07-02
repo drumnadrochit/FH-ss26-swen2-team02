@@ -1,11 +1,13 @@
 ﻿<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="compose.yaml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
+  <configuration default="false" name="Tourplanner Compose" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
     <deployment type="docker-compose.yml">
       <settings>
         <option name="removeVolumesOnComposeDown" value="true" />
         <option name="commandLineOptions" value="--build" />
         <option name="sourceFilePath" value="compose.yaml" />
         <option name="upAlwaysRecreate" value="true" />
+        <option name="upAttachDependencies" value="true" />
+        <option name="upDetach" value="false" />
         <option name="upForceRecreate" value="true" />
         <option name="upRemoveOrphans" value="true" />
         <option name="upRenewAnonVolumes" value="true" />

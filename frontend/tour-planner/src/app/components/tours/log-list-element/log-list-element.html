@@ -1,0 +1,20 @@
+<div class="flex flex-col max-w-75 p-2 border-1 rounded-sm gap-2 border-gray-200">
+  <div class="flex flex-row place-content-between gap-5">
+    <div class="flex gap-1 items-baseline">
+      <p class="text-[1rem]"> {{log().distance | number: "1.2"}} km </p>
+      <p class="text-[.9rem]"> / </p>
+      <p class="text-[1rem]"> {{log().duration | number:"1.2"}} h </p>
+
+    </div>
+    <app-tour-difficulty-indicator [difficulty]="log().difficulty"></app-tour-difficulty-indicator>
+
+  </div>
+  <div class="flex flex-row place-content-between">
+    <p class="text-[0.8rem]/3.5 max-w-75"> {{log().comment}} </p>
+  </div>
+  <div class="flex flex-row place-content-between items-end">
+    <app-tour-rating-indicator [maxScore]="5" [rating]="log().rating"></app-tour-rating-indicator>
+    <p class="text-[0.7rem] text-gray-400"> {{ log().creationDate | date:'short' }} </p>
+  </div>
+
+</div>

@@ -1,0 +1,86 @@
+<form [formRoot]="tourForm">
+  <div class="flex h-screen">
+    <div class="flex flex-col place-content-between  w-200 shadow-xl gap-3 p-3">
+      <div class="flex flex-col gap-3 text-gray-400">
+        <div class="flex justify-between px-3">
+          @if (edit() != undefined) {
+            <h1 class="text-center">Edit Tour</h1>
+
+          } @else {
+            <h1 class="text-center">Add Tour</h1>
+          }
+          <div (click)="router.navigate(['/tours'])" class="hover:outline-3 hover:cursor-pointer rounded-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="lucide lucide-x-icon lucide-x">
+              <path d="M18 6 6 18"/>
+              <path d="m6 6 12 12"/>
+            </svg>
+          </div>
+        </div>
+        <hr class="p-2  text-gray-300">
+        <div class="flex gap-3">
+          <input-field class="grow" label="Title" [type]="InputType.text" [formField]="tourForm.title"
+                       placeholder="Tour Title"></input-field>
+          <app-drop-down class="min-w-40" label="Tour Type"
+                         [options]="[{label:'Hike', value:TourType.Hike},{label:'Bike', value:TourType.Bike}]"
+                         [formField]="tourForm.type"></app-drop-down>
+
+        </div>
+
+        <div class="flex flex-col gap-3 ">
+          <input-field class="grow" label="Start" [formField]="tourForm.fromAddress" [type]="InputType.search"
+                       placeholder="Start Address"></input-field>
+          <input-field class="grow" label="End" [formField]="tourForm.toAddress" [type]="InputType.search"
+                       placeholder="End Address"></input-field>
+
+        </div>
+        <input-field class="min-h-30" label="Description" [formField]="tourForm.description"
+                     [type]="InputType.multiline" placeholder="Tour Description"></input-field>
+
+
+      </div>
+
+      <div class="flex flex-col gap-3">
+
+
+        <div class=" flex gap-3 text-sm text-gray-400">
+          <div class="grow flex flex-col">
+            <p class="px-2">Distance</p>
+            <div class="flex place-content-between gap-3 p-3 border-1 border-gray-300 rounded-md">
+              <p>{{ distance() | number:"1.1-2" }}</p>
+              <p>km</p>
+            </div>
+          </div>
+
+
+          <div class="grow flex flex-col">
+            <p class="px-2">Duration</p>
+            <div class="flex place-content-between gap-3 p-3 border-1 border-gray-300 rounded-md">
+              <p>{{ duration() | number:"1.1-2" }}</p>
+              <p>h</p>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="flex gap-3">
+
+          <input-button class="grow" [loading]="tourForm().submitting()" [disabled]="!tourForm().valid()"
+                        [label]="(edit() != undefined) ? 'Update Tour' : 'Add Tour'"></input-button>
+          @if(edit() != undefined){
+            <div (click)="onDelete(id())" tabindex="1" class="flex items-center justify-center p-3 rounded-sm outline-2 hover:cursor-pointer hover:outline-red-400 hover:text-red-400 text-gray-400  outline-gray-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </div>
+
+          }
+          </div>
+      </div>
+
+    </div>
+    <div class="block min-h-full w-full bg-gray-200 overflow-hidden">
+      <leaflet-map></leaflet-map>
+    </div>
+  </div>
+</form>

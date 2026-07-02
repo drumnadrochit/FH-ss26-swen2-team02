@@ -17,31 +17,35 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult> Login([FromBody] CredentialsDTO credentials)
+    public async Task<ActionResult> Login([FromBody] AuthenticationRequestDTO authenticationRequest)
     {
         try
         {
-            var token = await _userService.LoginUser(credentials.Username, credentials.Password);
-            return Ok(token);
+            var token = await _userService.LoginUser(authenticationRequest.Username, authenticationRequest.Password);
+            var response = new AuthenticationResponseDTO{AccessToken =  token};
+            return Ok(response);
         }
         catch (Exception e)
         {
-            return Conflict("Username or password is incorrect");
+            var response = new ErrorDTO{ErrorType = ErrorType.Client, Message = "Username or password is incorrect"};
+            return Conflict(response);
         }
         return Ok("you are logged in");
     }
     
     [HttpPost("register")]
-    public async Task<ActionResult> Register([FromBody] CredentialsDTO credentials)
+    public async Task<ActionResult> Register([FromBody] AuthenticationRequestDTO authenticationRequest)
     {
         try
         {
-            var user = await _userService.RegisterUser(credentials.Username, credentials.Password);
+            var user = await _userService.RegisterUser(authenticationRequest.Username, authenticationRequest.Password);
             return Created();
         }
         catch (Exception e)
         {
-            return Conflict("Username already exists");
+            var response = new ErrorDTO{ErrorType = ErrorType.Client, Message = "Username already exists"};
+            
+            return Conflict(response);
         }
     }
 }

@@ -5,6 +5,10 @@ export interface Authenciation {
   password: string;
 }
 
+export interface AuthenticationResponseDTO {
+  accessToken: string;
+}
+
 export const loginModel = signal<Authenciation>({
   username: '',
   password: '',

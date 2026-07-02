@@ -10,10 +10,18 @@ http:
     type: json
     data: |-
       { 
-        "Name":"Barmbeker Rundgang",
-        "Description":"Ein kleiner Rundgang der zum entdecken einlädt. Erkunde Barmbeks schönste Ecken.",
-        "From": "Barmbeckstraße 12",
-        "To": "Lat: 1- Long: 12",
+        "title":"Barmbeker Rundgang",
+        "description":"Ein kleiner Rundgang der zum entdecken einlädt. Erkunde Barmbeks schönste Ecken.",
+        "from": {
+            "latitude":0.00,
+            "longitude":0.00,
+            "address": "Address A"
+        },
+        "to": {
+            "latitude":0.00,
+            "longitude":0.00,
+            "address": "Address A"
+        },
         "TransportType": 0
       }
   auth: inherit

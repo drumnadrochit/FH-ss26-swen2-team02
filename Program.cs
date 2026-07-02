@@ -14,6 +14,14 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AnyOrigin",policyBuilder =>
+            {
+                policyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            });
+        });
         
         // Add services to the container.
         builder.Services.AddAuthorization();
@@ -82,7 +90,7 @@ public class Program
         // app.UseHttpsRedirection();
 
         app.UseAuthorization();
-        
+        app.UseCors("AnyOrigin");
 
         app.Run();
     }

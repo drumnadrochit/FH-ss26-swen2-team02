@@ -1,0 +1,18 @@
+<div class="flex flex-col h-full">
+  <p class="text-sm text-gray-400 ">{{ label() }} </p>
+  <div class="flex relative">
+    <select [value]="value()" (change)="onSelect($event)" (click)="open.set(!open())" (focusout)="open.set(false)"  class="appearance-none grow w-full text-gray-500 bg-gray-100 rounded-md p-3 hover:bg-gray-200 focus:outline-gray-500 focus:outline-2 ">
+      @for (option of options(); track option.label) {
+        <option  [value]="option.value"> {{option.label}} </option>
+      }
+    </select>
+    @if(open()){
+      <svg class="pointer-events-none absolute w-7 stroke-gray-500 right-2 top-1/2 -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+    }@else{
+    <svg class="pointer-events-none absolute w-7 stroke-gray-500 right-2 top-1/2 -translate-y-1/2" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m6 9 6 6 6-6"/></svg>
+
+    }
+
+  </div>
+
+</div>

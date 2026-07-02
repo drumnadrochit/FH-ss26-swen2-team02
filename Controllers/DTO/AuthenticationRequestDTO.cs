@@ -2,7 +2,7 @@
 
 namespace TourPlanner.API.DTO;
 
-public class CredentialsDTO
+public class AuthenticationRequestDTO
 {
     [Required]
     [StringLength(50, MinimumLength = 3)]

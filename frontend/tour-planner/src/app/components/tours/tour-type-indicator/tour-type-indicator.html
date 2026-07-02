@@ -1,0 +1,13 @@
+<div class="flex items-center h-full">
+@switch (tourType())
+{
+
+  @case (TourType.Hike){
+    <svg class="w-6 h-6 size-6 stroke-gray-800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+  }
+  @case (TourType.Bike)
+  {
+    <svg class="w-6 h-6 size-6 stroke-gray-800" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg>
+  }
+}
+</div>

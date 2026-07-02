@@ -1,6 +1,9 @@
-<div class="flex flex-col gap-2">
+<div class="flex flex-col h-full">
   <div class="flex justify-between items-baseline px-2">
-    <p class="text-sm text-gray-400 ">{{ label() }} @if (required()) {*} </p>
+    @if(label().length != 0)
+    {
+      <p class="text-sm text-gray-400 ">{{ label() }} @if (required()) {*} </p>
+    }
     @if(isInvalid())
     {
       @for (error of errors() ; track error.message) {
@@ -10,5 +13,21 @@
 
     }
   </div>
-  <input [class]="'bg-gray-100 rounded-xl p-3 hover:bg-gray-200 focus:outline-gray-500 focus:outline-2 ' + (isInvalid() ? 'focus:outline-red-300 outline-red-400 outline-2' : '') " [type]="type()" [placeholder]="placeholder()" [value]="value()" (input)="value.set($event.target!.value)"   />
+  <div class="flex flex-col grow relative">
+    @if(type() == InputType.multiline){
+      <textarea [class]="'text-[0.9rem]/4 grow resize-none w-full bg-gray-100 rounded-md p-3 hover:bg-gray-200 focus:outline-gray-500 focus:outline-2 ' + (isInvalid() ? 'focus:outline-red-300 outline-red-400 outline-2' : '') "  [placeholder]="placeholder()" [value]="value()" (input)="onInput($event)" > </textarea>
+    }@else {
+      <input [class]="'grow w-full bg-gray-100 rounded-md p-3 hover:bg-gray-200 focus:outline-gray-500 focus:outline-2 ' + (isInvalid() ? 'focus:outline-red-300 outline-red-400 outline-2' : '') " [type]="getType()" [placeholder]="placeholder()" [value]="value()" (input)="onInput($event)" />
+    }
+  @if(type() == InputType.search)
+  {
+    @if(value().length == 0){
+    <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 size-5 stroke-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+
+  } @else {
+    <svg (click)="value.set('')" class="absolute right-3 top-1/2 -translate-y-1/2 size-5 stroke-gray-400 hover:stroke-gray-600 hover:cursor-pointer " xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+  }
+  }
+
+  </div>
 </div>

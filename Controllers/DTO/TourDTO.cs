@@ -11,25 +11,25 @@ public class TourDTO
     public int? Id {get; set;}
     
     [Required]
-    public required string Name {get; set;}
+    public required string Title {get; set;}
     
     public string? Description {get; set;}
     
     [Required]
-    public string From  {get; set;}
+    public Location From  {get; set;}
     
     [Required]
-    public string To {get; set;}
+    public Location To {get; set;}
     
     
     public int? UserId { get; set; }
     
     [Required]
-    public TransportTypes TransportType {get; set;}
+    public string Type {get; set;}
     
+    [Required]
+    public float Distance {get; set;}
     
-    public float? Distance {get; set;}
-    
-    public float? Duration {get; set;}
-    
+    [Required]
+    public float Duration {get; set;}
 }

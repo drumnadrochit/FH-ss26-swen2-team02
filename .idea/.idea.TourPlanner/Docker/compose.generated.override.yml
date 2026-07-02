@@ -2,7 +2,7 @@
 services:
   tour-planner:
     build:
-      context: "C:\\Users\\Vukbo\\RiderProjects\\TP"
+      context: "C:\\Users\\bozov\\RiderProjects\\TourPlanner"
       dockerfile: "Dockerfile"
       target: "base"
     command: []
@@ -15,7 +15,7 @@ services:
     image: "tourplanner:dev"
     ports: []
     volumes:
-    - "C:\\Users\\Vukbo\\RiderProjects\\TP:/app:rw"
-    - "C:\\Users\\Vukbo\\RiderProjects\\TP:/src:rw"
-    - "C:\\Users\\Vukbo\\.nuget\\packages:/home/app/.nuget/packages"
+    - "C:\\Users\\bozov\\RiderProjects\\TourPlanner:/app:rw"
+    - "C:\\Users\\bozov\\RiderProjects\\TourPlanner:/src:rw"
+    - "C:\\Users\\bozov\\.nuget\\packages:/home/app/.nuget/packages"
     working_dir: "/app"

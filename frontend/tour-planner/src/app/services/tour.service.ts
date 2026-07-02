@@ -1,27 +1,42 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Authenciation} from '../interfaces/authentication-model';
-import {firstValueFrom, map} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {AuthService} from './auth.service';
+import {TourRequestDTO, TourResponseDTO} from '../models/dto/tour.dto';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class TourService {
+
   private http = inject(HttpClient);
-  private readonly baseURL = 'http://localhost:2407/api';
+  private auth = inject(AuthService);
 
-  async login(data: Authenciation)
+  private readonly baseURL = 'http://localhost:8080/api';
+
+  public getDefaultHeader()
   {
-    const status = await firstValueFrom(this.http.post(`${this.baseURL}/auth/login`,data, {observe: 'response'}).pipe(map(r => r.status))).catch(err => {return 400});
-
-    return status == 200;
+    return new HttpHeaders({"authorization" : 'Bearer ' + this.auth.getAccessToken()});
   }
 
-  async register(data: Authenciation)
+  createTour(tour: TourRequestDTO)
   {
-    const status = await firstValueFrom(this.http.post(`${this.baseURL}/auth/register`,data, {observe: 'response'}).pipe(map(r => r.status))).catch((r) => { return 400})
-
-    return status == 201;
+    return this.http.post<TourResponseDTO>(`${this.baseURL}/tours`, tour, {headers: this.getDefaultHeader()})
   }
+
+  deleteTour(id:number)
+  {
+    return this.http.delete(`${this.baseURL}/tours/${id}`, {observe: "response", headers: this.getDefaultHeader()})
+  }
+
+  updateTour(id:number, tour: TourRequestDTO)
+  {
+    return this.http.put<TourResponseDTO>(`${this.baseURL}/tours/${id}`, tour, {headers: this.getDefaultHeader()})
+  }
+
+  // getTours()
+  // {
+  //   return this.
+  // }
 
 }

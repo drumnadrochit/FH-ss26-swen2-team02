@@ -1,11 +1,11 @@
 import {Component, inject, signal} from '@angular/core';
 import {form, FormField, FormRoot, minLength, required} from '@angular/forms/signals';
 import {Router} from '@angular/router';
-import {InputField} from '../../components/input-field/input-field';
+import {InputField, InputType} from '../../components/input-field/input-field';
 import {InputButton} from '../../components/input-button/input-button';
-import {TourService} from '../../services/tour.service';
-import {loginModel} from '../../interfaces/authentication-model';
 import {InfoCard} from '../../components/info-card/info-card';
+import {AuthService} from '../../services/auth.service';
+import {loginModel} from '../../models/auth.model';
 
 
 @Component({
@@ -21,7 +21,7 @@ import {InfoCard} from '../../components/info-card/info-card';
   styleUrl: './login.css',
 })
 export class Login {
-  private tourService = inject(TourService);
+  private auth = inject(AuthService)
   private router = inject(Router);
 
     loginForm = form(loginModel, (sp) => {
@@ -33,8 +33,8 @@ export class Login {
         action: async (field) => {
           const data = field().value();
 
-          const success = await this.tourService.login(data);
-
+          const success = await this.auth.login(data);
+          console.log(success);
           if(success){
            await this.router.navigate(['/tours'])
            return
@@ -51,5 +51,5 @@ export class Login {
     }
 
 
-
+  protected readonly InputType = InputType;
 }

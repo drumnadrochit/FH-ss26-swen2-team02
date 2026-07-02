@@ -8,6 +8,13 @@ public class AppDBC : DbContext
     public DbSet<Tour> Tours { get; set; }
     public DbSet<User> Users { get; set; }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Tour>().OwnsOne(t => t.From);
+        modelBuilder.Entity<Tour>().OwnsOne(t => t.To);
+        
+        
+    }
 
     public AppDBC(DbContextOptions<AppDBC> options) : base(options)
     {

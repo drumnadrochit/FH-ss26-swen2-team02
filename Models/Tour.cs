@@ -2,11 +2,20 @@
 
 namespace TourPlanner.Entities;
 
-public enum TransportTypes
+public enum TourType
 {
     Hike,
     Bike
 }
+
+public class Location
+{
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
+    public string Address { get; set; }
+
+}
+
 
 public class Tour
 {
@@ -29,7 +38,7 @@ public class Tour
     /// <summary>
     /// Name of the tour
     /// </summary>
-    public string Name { get; set; }
+    public string Title { get; set; }
     /// <summary>
     /// Description of the tour
     /// </summary>
@@ -37,15 +46,15 @@ public class Tour
     /// <summary>
     /// Starting location of the route
     /// </summary>
-    public string From { get; set; }
+    public Location From { get; set; }
     /// <summary>
     /// End location of the route
     /// </summary>
-    public string To { get; set; }
+    public Location To { get; set; }
     /// <summary>
     /// Transportation type used, eg. walking or biking
     /// </summary>
-    public TransportTypes TransportType { get; set; }
+    public string Type { get; set; }
     /// <summary>
     /// Estimated distance of the route, in km.
     /// </summary>
@@ -54,4 +63,6 @@ public class Tour
     /// Estimated time of the route, in h.
     /// </summary>
     public float Duration { get; set; }
+    
+ 
 }

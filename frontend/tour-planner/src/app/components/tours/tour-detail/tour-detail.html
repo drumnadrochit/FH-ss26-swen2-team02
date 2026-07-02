@@ -1,31 +1,74 @@
-<div class="flex flex-col h-full  shadow-xl p-3 rounded-2xl gap-3 ">
-  <div class="flex items-center justify-center min-h-100 bg-gray-200 rounded-md">
-    <p class="text-gray-400">map placeholder</p>
-  </div>
-
-  <div class="flex grow overflow-hidden">
-    <div class="flex flex-col grow max-w-6/12 p-3 gap-3">
-      <h1 class="text-xl">{{ tour().title }}</h1>
-      <div class="flex flex-row gap-2 justify-center ">
-        <div class="flex flex-row items-baseline place-content-between p-1.5 border-1 rounded-md w-fit h-fit min-w-20 border-gray-400">
-          <p class="ms-regular text-sm text-gray-400"> {{ tour().distance | number: '2.2' }} </p>
-          <p class="ms-regular text-sm text-gray-400">km</p>
-        </div>
-        <div class="flex flex-row items-baseline place-content-between p-1.5 border-1 rounded-md w-fit h-fit min-w-20 border-gray-400">
-          <p class="ms-regular text-sm text-gray-400"> {{ tour().duration | number: '2.2' }} </p>
-          <p class="ms-regular text-sm text-gray-400">h</p>
-        </div>
+<div class="flex  h-full  shadow-xl p-3 rounded-2xl gap-3 ">
+    <div class="flex flex-col grow gap-3">
+      <div class="block min-h-100 grow w-full bg-gray-200 rounded-md overflow-hidden">
+        <leaflet-map></leaflet-map>
       </div>
 
-      <hr class="text-gray-300">
-<!--      <hr>-->
-      <p class="fredoka-light text-sm/4 text-gray-600">{{tour().description}}</p>
+      <div class="flex flex-col p-3 place-content-between rounded-md border-1 border-gray-200 gap-3 min-h-50">
+      <div class="flex flex-col gap-1">
+        <div class="flex place-content-between items-center gap-3">
+          <div class="flex gap-2 items-center" >
+
+            <!--            <app-tour-type-indicator [tourType]="tour().type"></app-tour-type-indicator>-->
+            <h1 class="text-base/4">{{ tour().title }}</h1>
+
+          </div>
+          <div class="flex gap-2">
+            <p class="text-[0.9rem]/3.5 text-gray-500"> {{tour().distance | number:'1.1-2'}} km</p>
+<!--            <p class="text-[0.9rem]/3.5 text-gray-500">in</p>-->
+            <p class="text-[0.9rem]/3.5 text-gray-500"> {{tour().duration | number:'1.1-2'}} h</p>
+
+          </div>
+        </div>
+        <div class="flex gap-3">
+          @if(popularity() < 2)
+          {
+            <p class="text-[0.8rem]/3.5 text-gray-500"> new </p>
+          }@else {
+            <p class="text-[0.8rem]/3.5 text-gray-500"> popular </p>
+
+          }
+          @if(childFriendliness() > 0)
+          {
+            <p class="text-[0.8rem]/3.5 text-gray-500"> suitable for children </p>
+          } @else {
+            <p class="text-[0.8rem]/3.5 text-gray-500"> demanding route  </p>
+          }
+
+        </div>
+
+
+      </div>
+          <p class="text-[0.9rem]/4.5 text-gray-800 grow max-w-100">{{tour().description}}</p>
+
+          <div class="flex gap-4 place-content-between items-end">
+            <div>
+              <p class="text-[0.6rem] text-gray-500">Start </p>
+              <p class="text-[0.8rem] text-gray-500">{{tour().from.address}}</p>
+            </div>
+            <div>
+              <p class="text-[0.6rem] text-gray-500">End </p>
+              <p class="text-[0.8rem] text-gray-500">{{tour().to.address}}</p>
+            </div>
+
+          </div>
+<!--        <div class="flex flex-row gap-2 justify-center ">-->
+<!--          <div class="flex flex-row items-baseline place-content-between p-1.5 border-1 rounded-md w-fit h-fit min-w-20 border-gray-400">-->
+<!--            <p class="ms-regular text-sm text-gray-400"> {{ tour().distance | number: '2.2' }} </p>-->
+<!--            <p class="ms-regular text-sm text-gray-400">km</p>-->
+<!--          </div>-->
+<!--          <div class="flex flex-row items-baseline place-content-between p-1.5 border-1 rounded-md w-fit h-fit min-w-20 border-gray-400">-->
+<!--            <p class="ms-regular text-sm text-gray-400"> {{ tour().duration | number: '2.2' }} </p>-->
+<!--            <p class="ms-regular text-sm text-gray-400">h</p>-->
+<!--          </div>-->
+<!--          <hr class="text-gray-300">-->
+<!--          <p class="fredoka-light text-sm/4 text-gray-600">{{tour().description}}</p>-->
+<!--        </div>-->
+    </div>
 
     </div>
-    <div class="flex grow items-center justify-center bg-gray-100  rounded-md">
-      <p class="text-gray-400"> tour logs placeholder </p>
-    </div>
-  </div>
+
+      <log-list [logs]="tour().logs"></log-list>
 
 
 </div>

@@ -8,8 +8,8 @@
   </div>
   <hr class="text-gray-200 border-1" />
     <div class="flex flex-col gap-3 grow">
-  <input-field label="Username" placeholder="Username" [formField]="loginForm.username"> </input-field>
-  <input-field label="Password" placeholder="********" type="password" [formField]="loginForm.password"> </input-field>
+  <input-field label="Username" placeholder="Username" [type]="InputType.text" [formField]="loginForm.username"> </input-field>
+  <input-field label="Password" placeholder="********" [type]="InputType.password" [formField]="loginForm.password"> </input-field>
 
   </div>
   @for (error of  loginForm().errors(); track error.message) {

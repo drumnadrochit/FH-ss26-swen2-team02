@@ -2,10 +2,10 @@ import {Component, inject} from '@angular/core';
 import {form, FormField, FormRoot, minLength, required} from '@angular/forms/signals';
 import {Router} from '@angular/router';
 import {InputButton} from '../../components/input-button/input-button';
-import {InputField} from '../../components/input-field/input-field';
-import {TourService} from '../../services/tour.service';
-import {registerModel} from '../../interfaces/authentication-model';
+import {InputField, InputType} from '../../components/input-field/input-field';
 import {CardType, InfoCard} from '../../components/info-card/info-card';
+import {AuthService} from '../../services/auth.service';
+import {registerModel} from '../../models/auth.model';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +20,7 @@ import {CardType, InfoCard} from '../../components/info-card/info-card';
   styleUrl: './register.css',
 })
 export class Register {
-  private tourService = inject(TourService);
+  private auth = inject(AuthService);
   private router = inject(Router);
 
   registerForm = form(registerModel, (sp) => {
@@ -32,7 +32,7 @@ export class Register {
       action: async (field) => {
         const data = field().value();
 
-        const success = await this.tourService.register(data);
+        const success = await this.auth.register(data);
 
         if(success){
           await this.router.navigate(['\login']);
@@ -48,4 +48,5 @@ export class Register {
     return  this.registerForm.username().valid()  && this.registerForm.password().valid();
   }
 
+  protected readonly InputType = InputType;
 }
