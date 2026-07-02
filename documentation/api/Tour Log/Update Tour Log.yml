@@ -1,0 +1,26 @@
+info:
+  name: Update Tour Log
+  type: http
+  seq: 2
+
+http:
+  method: PUT
+  url: "{{host}}/api/logs/2"
+  body:
+    type: json
+    data: |-
+      {
+        "tourId": 3,
+        "comment": "Wunderschöne Wanderung, aber anstrengend! Aber dafuer sehr sehr cool!",
+        "difficulty": 3,
+        "distance": 12.5,
+        "duration": 3.5,
+        "rating": 5
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
