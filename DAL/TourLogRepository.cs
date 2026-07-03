@@ -10,7 +10,7 @@ public class TourLogRepository : BaseRepository
     {
     }
 
-    public async Task<List<TourLog>> GetAllTourLog(int tourId)
+    public virtual async Task<List<TourLog>> GetAllTourLog(int tourId)
     {
         var logs = await dbc.TourLogs.Where(tl => tl.TourId == tourId).ToListAsync();
         
@@ -19,14 +19,14 @@ public class TourLogRepository : BaseRepository
         return logs;
     }
 
-    public async Task<TourLog> AddTourLog(TourLog tourLog)
+    public virtual async Task<TourLog> AddTourLog(TourLog tourLog)
     {
         await dbc.TourLogs.AddAsync(tourLog);
         await dbc.SaveChangesAsync();
         return tourLog;
     }
 
-    public async Task<TourLog> UpdateTourLog(TourLog tourLog)
+    public virtual async Task<TourLog> UpdateTourLog(TourLog tourLog)
     {
         try
         {
@@ -41,7 +41,7 @@ public class TourLogRepository : BaseRepository
         }
     }
 
-    public async Task DeleteTourLog(int tourLogId, int tourId)
+    public virtual async Task DeleteTourLog(int tourLogId, int tourId)
     {
         var tourLog = await dbc.TourLogs.Where(t => t.Id == tourLogId && t.TourId == tourId ).FirstOrDefaultAsync();
         

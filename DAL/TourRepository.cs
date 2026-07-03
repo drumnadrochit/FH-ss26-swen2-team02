@@ -12,14 +12,14 @@ public class TourRepository : BaseRepository
         
     }
     
-    public async Task<List<Tour>> GetAllTours(int userId)
+    public virtual async Task<List<Tour>> GetAllTours(int userId)
     {
         var tours =  await dbc.Tours.Include(t => t.Logs).Where(t => t.UserId == userId).ToListAsync();
         if(tours == null || tours.Count == 0) throw new NotFoundException($"Could not find any tours in user {userId}");
         return tours;
     }
 
-    public async Task<Tour?> GetTourById(int userId, int id)
+    public virtual async Task<Tour?> GetTourById(int userId, int id)
     {
         try
         {
@@ -33,14 +33,14 @@ public class TourRepository : BaseRepository
         }
     }
 
-    public async Task<Tour> AddTour( Tour tour)
+    public virtual async Task<Tour> AddTour( Tour tour)
     {
         await dbc.Tours.AddAsync(tour);
         await dbc.SaveChangesAsync();
         return tour;
     }
 
-    public async Task<Tour> UpdateTour(Tour tour)
+    public virtual async Task<Tour> UpdateTour(Tour tour)
     {
         try
         {
@@ -55,7 +55,7 @@ public class TourRepository : BaseRepository
         }
     }
 
-    public async Task DeleteTour(int tourId, int userId)
+    public virtual async Task DeleteTour(int tourId, int userId)
     {
         Tour? tour = await dbc.Tours.Where(t => t.Id == tourId && t.UserId == userId ).SingleOrDefaultAsync();
         
