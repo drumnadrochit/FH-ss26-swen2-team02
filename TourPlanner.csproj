@@ -27,4 +27,10 @@
       <Folder Include="frontend\tour-planner\src\app\views\" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Compile Remove="TourPlanner.Tests\**" />
+        <EmbeddedResource Remove="TourPlanner.Tests\**" />
+        <None Remove="TourPlanner.Tests\**" />
+    </ItemGroup>
+
 </Project>
