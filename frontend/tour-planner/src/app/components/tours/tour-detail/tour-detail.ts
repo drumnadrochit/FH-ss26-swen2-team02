@@ -1,5 +1,5 @@
 import {Component, computed, inject, model, OnChanges} from '@angular/core';
-import {TourModel, TourType} from '../../../models/tour.model';
+import {TourLogModel, TourModel, TourType} from '../../../models/tour.model';
 import {DatePipe, DecimalPipe} from '@angular/common';
 import {Map} from '../../map/map';
 import {LogList} from '../log-list/log-list';
@@ -8,6 +8,7 @@ import {MapService} from '../../../services/map.service';
 import {RouteService} from '../../../services/route.service';
 import {TourService} from '../../../services/tour.service';
 import {latLng} from 'leaflet';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'tour-detail',
@@ -21,6 +22,8 @@ import {latLng} from 'leaflet';
   styleUrl: './tour-detail.css',
 })
 export class TourDetail implements  OnChanges{
+  router = inject(Router)
+
   tour = model.required<TourModel>();
   popularity = computed(() => this.tour().logs.length)
   childFriendliness = computed(() => {
@@ -54,6 +57,14 @@ export class TourDetail implements  OnChanges{
   readonly mapService = inject(MapService);
   readonly routeService = inject(RouteService);
 
+  onEditLog(log:TourLogModel)
+  {
+    this.router.navigate([`/tours/${this.tour().id}/logs/${log.id}`]);
+  }
+
+  onAddLogPressed(){
+    this.router.navigate([`/tours/${this.tour().id}/logs/create`]);
+  }
 
   async ngOnChanges(){
       let route = await this.routeService.getRoute(

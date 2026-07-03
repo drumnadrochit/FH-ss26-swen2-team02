@@ -11,11 +11,14 @@ public class UserService
 {
     private readonly UserRepository _userRepository;
     private readonly IConfiguration _configurationManager;
+    private readonly ILogger<UserService> logger;
+
     
-    public UserService(UserRepository userRepository, IConfiguration configurationManager)
+    public UserService(UserRepository userRepository, IConfiguration configurationManager, ILogger<UserService> logger)
     {
         _userRepository = userRepository;
         _configurationManager = configurationManager;
+        this.logger = logger;
     }
     
     public async Task<User> GetUserByUsername(string username)
@@ -38,17 +41,18 @@ public class UserService
             var duplicate =  await _userRepository.GetUserByUsername(username);
             if (duplicate == null)
             {
-                await _userRepository.AddUser(user);
-                
+                var u = await _userRepository.AddUser(user);
+                logger.LogInformation($"Registered new user '{u.Username}'");
             }
             else
             {
-                throw new Exception($"User with username '{username}' already exists.");
+                throw new UserAlreadyExistsException($"User with username: '{username}' already exists.");
             }
         }
         catch (Exception e)
         {
-            throw new UserAlreadyExistsException($"User with username '{username}' already exists.", e);
+            logger.LogError($"Failed registration of user {username}",e);
+            throw e;
         }
         
         return user;
@@ -61,9 +65,9 @@ public class UserService
         try
         {
             var match = await _userRepository.GetUserByUsername(username);
-            if (match == null) throw new Exception($"User with username '{username}' does not exist.");
+            if (match == null) throw new IncorrectCredentialsException($"Username or password is incorrect.");
             if (!match.Password.Equals(password))
-                throw new Exception($"User with username '{username}' does not match password.");
+                throw new IncorrectCredentialsException($"Username or password is incorrect.");
 
             var claims = new List<Claim>
             {
@@ -81,11 +85,15 @@ public class UserService
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds);
             
+            logger.LogInformation($"Logged in user '{match.Username}'");
+            
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
         catch (Exception e)
         {
-            throw new Exception($"User with username '{username}' does not exist.", e);
+            logger.LogError($"Failed logging in user '{username}'",e);
+            
+            throw e;
         }
         
     }

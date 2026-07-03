@@ -25,6 +25,7 @@ export interface TourModel {
 
 export interface TourLogModel {
   id: number;
+  tourId: number;
   creationDate: Date
   comment: string;
   distance: number;

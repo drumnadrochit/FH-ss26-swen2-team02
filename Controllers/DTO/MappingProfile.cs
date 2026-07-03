@@ -7,7 +7,11 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<TourDTO, Tour>().ReverseMap();
-        CreateMap<TourLogDTO, TourLog>().ReverseMap();
+        CreateMap<TourDTO, Tour>().ForMember(t => t.Logs, opt => opt.MapFrom(s => s.Logs));
+        CreateMap<Tour, TourDTO>().ForMember(t => t.Logs, opt => opt.MapFrom(s => s.Logs));
+
+        CreateMap<LogRequestDTO,TourLog>();
+        CreateMap<TourLog, LogResponseDTO>();
+        
     }
 }

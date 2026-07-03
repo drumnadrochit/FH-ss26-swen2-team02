@@ -1,4 +1,4 @@
-import {Component, model, signal} from '@angular/core';
+import {Component, EventEmitter, model, output, Output, signal} from '@angular/core';
 import {TourDifficultyIndicator} from '../tour-difficulty-indicator/tour-difficulty-indicator';
 import {TourRatingIndicator} from '../tour-rating-indicator/tour-rating-indicator';
 import {TourLogModel} from '../../../models/tour.model';
@@ -23,6 +23,8 @@ export class LogList {
   logs = model.required<TourLogModel[]>();
 
   filteredLogs = signal<TourLogModel[]>([]);
+  onAddLog = output({alias: 'onAddLog'})
+  @Output() onEdit = new EventEmitter<TourLogModel>();
 
   onValueChanged(value: string ): void {
     if ( value.length > 0) {

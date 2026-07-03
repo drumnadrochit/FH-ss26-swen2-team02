@@ -1,17 +1,16 @@
  <div class="w-full h-screen flex p-6 content-stretch">
-
   <div class="flex h-full gap-3 grow">
     <div class="flex flex-col gap-6 place-content-between shadow-xl p-3 rounded-2xl min-w-75 max-w-75">
       <h1 class="text-center text-gray-400">Tours</h1>
       <div class="flex flex-col rounded-md p-2 gap-2 overflow-clip overflow-y-scroll grow">
         @for (tour of tours(); track tour.id) {
-          <list-element (elementEdited)="onEdit($event)" (elementSelected)="onSelect($event)" [id]="tour.id!" [title]="tour.title" [type]="tour.type" [distance]="tour.distance" [duration]="tour.duration"></list-element>
+          <list-element (elementEdited)="onEdit($event)" [selected]="selectedTour() ? (tour.id == selectedTour()!.id) : false" (elementSelected)="onSelect($event)" [id]="tour.id!" [title]="tour.title" [type]="tour.type" [distance]="tour.distance" [duration]="tour.duration"></list-element>
         }
       </div>
       <input-button (click)="router.navigate(['tours/create'])" label="Add Tour"></input-button>
     </div>
-    @if (tourSelected()) {
-      <tour-detail [(tour)]="selectedTour!" class="grow" ></tour-detail>
+    @if (selectedTour()) {
+      <tour-detail [tour]="selectedTour()!" class="grow" ></tour-detail>
     } @else {
       <div class="flex items-center justify-center grow">
         <p class="text-center text-sm text-gray-500">For more details <br> select tour from list.</p>

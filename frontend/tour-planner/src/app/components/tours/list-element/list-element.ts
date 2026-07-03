@@ -20,6 +20,7 @@ export class ListElement {
   duration = input<number>(0)
 
   hover = signal<boolean>(false)
+  selected = input<boolean>(false)
 
   @Output('elementSelected') elementSelected = new EventEmitter<number>();
   @Output('elementEdited') elementEdit = new EventEmitter<number>();

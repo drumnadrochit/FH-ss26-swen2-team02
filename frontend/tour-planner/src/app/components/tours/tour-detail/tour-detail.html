@@ -68,7 +68,7 @@
 
     </div>
 
-      <log-list [logs]="tour().logs"></log-list>
+      <log-list (onEdit)="onEditLog($event)" (onAddLog)="onAddLogPressed()" [logs]="tour().logs"></log-list>
 
 
 </div>

@@ -13,7 +13,7 @@ namespace TourPlanner.Controllers;
 public class ToursController : ControllerBase
 {
   private readonly TourService tourService;
-
+  
   public ToursController(TourService tourService)
   {
     this.tourService = tourService;
@@ -35,7 +35,7 @@ public class ToursController : ControllerBase
     }
     catch (Exception e)
     {
-      return Conflict(e.Message);
+      return Conflict(new { error = e.Message});
     }
   }
   
@@ -49,7 +49,7 @@ public class ToursController : ControllerBase
     }
     catch (Exception e)
     {
-      return Conflict("Not Implemented");
+      return Conflict(new { error = e.Message});
     }
   }
   
@@ -65,7 +65,7 @@ public class ToursController : ControllerBase
     }
     catch (Exception e)
     {
-      return Conflict(e.Message);
+      return Conflict(new { error = e.Message});
     }
   }
   
@@ -79,7 +79,7 @@ public class ToursController : ControllerBase
     }
     catch (Exception e)
     {
-      return Conflict(e.Message);
+      return Conflict(new { error = e.Message});
     }
     
   }
@@ -94,7 +94,7 @@ public class ToursController : ControllerBase
       return File(jsonBytes, "application/json", "tours.json");
     }catch(Exception e)
     {
-      return Conflict(e.Message);
+      return Conflict(new { error = e.Message});
     }
   }
 
@@ -117,7 +117,7 @@ public class ToursController : ControllerBase
     }
     catch (Exception e)
     {
-      return Conflict(e.Message);
+      return Conflict(new { error = e.Message});
     }
   }
   
@@ -131,7 +131,7 @@ public class ToursController : ControllerBase
     }
     catch (Exception e)
     {
-      return Conflict(e);
+      return Conflict(new { error = e.Message});
     }
     
   }

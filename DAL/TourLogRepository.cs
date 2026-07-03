@@ -12,7 +12,11 @@ public class TourLogRepository : BaseRepository
 
     public async Task<List<TourLog>> GetAllTourLog(int tourId)
     {
-        return await dbc.TourLogs.Where(tl => tl.TourId == tourId).ToListAsync();
+        var logs = await dbc.TourLogs.Where(tl => tl.TourId == tourId).ToListAsync();
+        
+        if(logs == null || logs.Count == 0) throw new NotFoundException("Could not find any tour-logs");
+        
+        return logs;
     }
 
     public async Task<TourLog> AddTourLog(TourLog tourLog)
@@ -24,9 +28,17 @@ public class TourLogRepository : BaseRepository
 
     public async Task<TourLog> UpdateTourLog(TourLog tourLog)
     {
-        dbc.TourLogs.Update(tourLog);
-        await dbc.SaveChangesAsync();
-        return tourLog;
+        try
+        {
+            dbc.TourLogs.Update(tourLog);
+            await dbc.SaveChangesAsync();
+            return tourLog;
+
+        }
+        catch (Exception e)
+        {
+            throw new NotFoundException("Could not find tour-log");
+        }
     }
 
     public async Task DeleteTourLog(int tourLogId, int tourId)
@@ -35,7 +47,7 @@ public class TourLogRepository : BaseRepository
         
         if (tourLog == null)
         {
-            throw new Exception("TourLog not found");
+            throw new NotFoundException("Could not find tour-log");
         }
         
         dbc.TourLogs.Remove(tourLog);

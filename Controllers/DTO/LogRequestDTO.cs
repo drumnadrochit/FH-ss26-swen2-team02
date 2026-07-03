@@ -3,11 +3,27 @@ using TourPlanner.Entities;
 
 namespace TourPlanner.API.DTO;
 
-public class TourLogDTO
+public class LogRequestDTO
 {
     public int? Id { get; set; }
+    
     public int TourId { get; set; }
 
+    public string Comment { get; set; }
+
+    public int Difficulty { get; set; }
+
+    public float Distance { get; set; }
+
+    public float Duration { get; set; }
+
+    public int Rating { get; set; }
+}
+
+public class LogResponseDTO
+{
+    public int? Id { get; set; }
+    
     public string Comment { get; set; }
 
     public int Difficulty { get; set; }

@@ -140,7 +140,6 @@ export class TourCRUD implements AfterViewInit {
   onDelete(id:number)
   {
     this.tourService.deleteTour(id).subscribe(res => {
-      this.tourStore.tours.reload()
       this.router.navigate(['/tours'])
     })
   }
@@ -204,12 +203,10 @@ export class TourCRUD implements AfterViewInit {
 
       if(this.edit() != undefined){
         this.tourService.updateTour(this.id(),request).subscribe(res => {
-          this.tourStore.tours.reload()
           this.router.navigate(['/tours'])
         })
       }else{
       this.tourService.createTour(request).subscribe(value => {
-        this.tourStore.tours.reload()
         this.router.navigate(['tours'])
       })
 

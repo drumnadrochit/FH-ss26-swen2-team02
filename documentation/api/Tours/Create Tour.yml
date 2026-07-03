@@ -22,7 +22,7 @@ http:
             "longitude":0.00,
             "address": "Address A"
         },
-        "TransportType": 0
+        "Type": "Hike"
       }
   auth: inherit
 

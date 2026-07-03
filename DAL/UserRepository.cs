@@ -14,12 +14,13 @@ public class UserRepository : BaseRepository
         return await dbc.Users.SingleOrDefaultAsync(u => u.Username == username);
     }
 
-    public async Task AddUser(User user)
+    public async Task<User> AddUser(User user)
     {
         try
         {
             await dbc.Users.AddAsync(user);
             await dbc.SaveChangesAsync();
+            return user;
         }
         catch (Exception e) when (e is DbUpdateException || e is ArgumentException)
         {

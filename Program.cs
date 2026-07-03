@@ -1,4 +1,6 @@
 using System.Text;
+using log4net;
+using log4net.Config;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,6 +14,10 @@ public class Program
 {
     public static void Main(string[] args)
     {
+
+        var logRepository = LogManager.GetRepository(System.Reflection.Assembly.GetEntryAssembly());
+        XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
+        
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -23,6 +29,8 @@ public class Program
                 policyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             });
         });
+        
+        builder.Logging.AddLog4Net();
         
         // Add services to the container.
         builder.Services.AddAuthorization();

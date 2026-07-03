@@ -20,26 +20,28 @@ namespace TourPlanner.Controllers
         }
 
         [HttpPost("")]
-        public async Task<ActionResult> CreateTourLog([FromBody] TourLogDTO tourLogDto)
+        public async Task<ActionResult> CreateTourLog([FromBody] LogRequestDTO logRequestDto)
         {
             try
             {
-                var tl = await _tourLogService.AddTourLog(tourLogDto);
+                var tl = await _tourLogService.AddTourLog(logRequestDto);
                 return Ok(tl);
             }
             catch (Exception ex)
             {
                 // Sauber: Nur die Nachricht als JSON-Objekt zurückgeben
-                return BadRequest(ex.Message);
+                return BadRequest(new{
+                    error = ex.Message
+                });
             }
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateTourLog([FromBody] TourLogDTO tourLog, int id)
+        public async Task<ActionResult> UpdateTourLog([FromBody] LogRequestDTO logRequest, int id)
         {
             try
             {
-                var t = await _tourLogService.UpdateTour(tourLog, id);
+                var t = await _tourLogService.UpdateTour(logRequest, id);
                 return Ok(t);
             }
             catch (Exception ex)

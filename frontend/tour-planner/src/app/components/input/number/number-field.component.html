@@ -1,0 +1,32 @@
+<div class="flex flex-col h-full gap-1">
+  <div class="flex justify-between items-baseline px-2 ">
+    <div class="flex gap-2 text-sm text-gray-400 justify-between grow ">
+    @if (label().length != 0) {
+      <p class=>{{ label() }} @if (required()) {
+        *
+      }
+      </p>
+    }
+      @if(min() && max()){
+        <h2 [class]="focused() ? 'visible' : 'invisible'">
+          @if(minLabel()){{{minLabel()}}:} {{min()}} - @if(maxLabel()){{{maxLabel()}}:} {{max()}}</h2>
+
+      }
+
+    </div>
+<!--    @if (touched()) {-->
+<!--      @for (error of errors(); track error.message) {-->
+<!--        <p class="text-xs text-red-400">{{ error.message }}</p>-->
+
+<!--      }-->
+
+<!--    }-->
+  </div>
+  <div class="flex flex-col grow relative ">
+    <h2 class="text-gray-400 absolute right-3 top-1/2 -translate-y-1/2">{{metric()}}</h2>
+    <input
+      [class]="'grow w-full bg-gray-100 rounded-md p-3 hover:bg-gray-200 focus:outline-gray-500 focus:outline-3 ' + (invalid() && touched() ? 'focus:outline-red-400 outline-red-500 outline-2' : '') "
+      type="text" [placeholder]="placeholder()" [value]="displayedValue()" (focus)="focused.set(true)" (blur)="focused.set(false)" (input)="onInput($event)" (focusout)="onFocusOut($event)"/>
+
+  </div>
+</div>

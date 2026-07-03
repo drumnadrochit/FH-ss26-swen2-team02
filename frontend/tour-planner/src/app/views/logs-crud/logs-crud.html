@@ -1,0 +1,37 @@
+<form [formRoot]="logForm" >
+<div class="flex w-screen h-screen justify-center items-center">
+  <div class="flex flex-col gap-3 w-xl rounded-xl shadow-xl border-1 border-gray-200 p-3">
+    <div class="text-gray-400 gap-3 flex justify-between mb-3 px3">
+      <h1>{{editMode() ? "Update" : "Add"}} Tour Log</h1>
+        <div (click)="onCancel()" class="hover:outline-3 hover:cursor-pointer rounded-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               class="lucide lucide-x-icon lucide-x">
+            <path d="M18 6 6 18"/>
+            <path d="m6 6 12 12"/>
+          </svg>
+        </div>
+      </div>
+    <input-field label="Comment" placeholder="What do you think?" [type]="InputType.text" [formField]="logForm.comment"></input-field>
+    <div class="flex gap-3">
+      <app-number-field class="grow" label="Distance" placeholder="0.00" metric="km" [formField]="logForm.distance"></app-number-field>
+      <app-number-field class="grow" label="Duration" placeholder="0.00" metric="h" [formField]="logForm.duration"></app-number-field>
+    </div>
+    <div class="flex gap-3">
+      <app-number-field class="grow" label="Difficulty" placeholder="0" minLabel="easy" maxLabel="hard" [formField]="logForm.difficulty"></app-number-field>
+      <app-number-field class="grow" label="Rating" placeholder="0" minLabel="poor" maxLabel="excellent" [formField]="logForm.rating"></app-number-field>
+    </div>
+    <div class="flex mt-3 gap-3">
+      <input-button [disabled]="!logForm().valid()" class="grow" [label]="(editMode() ? 'Update' : 'Add') + ' Log'"></input-button>
+      @if(editMode()){
+        <div (click)="onDelete()" tabindex="1" class="flex items-center justify-center p-3 rounded-sm outline-2 hover:cursor-pointer hover:outline-red-400 hover:text-red-400 text-gray-400  outline-gray-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </div>
+
+      }
+    </div>
+  </div>
+
+</div>
+
+</form>

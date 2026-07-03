@@ -32,4 +32,6 @@ public class TourDTO
     
     [Required]
     public float Duration {get; set;}
+    
+    public LogResponseDTO[]? Logs {get; set;}
 }

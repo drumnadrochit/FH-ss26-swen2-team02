@@ -9,15 +9,16 @@
         @if(filteredLogs().length == 0)
         {
           @for (log of logs() ; track log) {
-            <app-log-list-element [log]="log"></app-log-list-element>
+            <app-log-list-element (click)="onEdit.emit(log)" [log]="log"></app-log-list-element>
           }
 
         } @else {
           @for (log of filteredLogs() ; track log) {
-            <app-log-list-element [log]="log"></app-log-list-element>
+            <app-log-list-element (click)="onEdit.emit(log)" [log]="log"></app-log-list-element>
           }
         }
       </div>
     }
-  <input-button [buttonType]="ButtonType.secondary" label="Add Log"></input-button>
+
+  <input-button (click)="onAddLog.emit()" [buttonType]="ButtonType.secondary" label="Add Log"></input-button>
 </div>

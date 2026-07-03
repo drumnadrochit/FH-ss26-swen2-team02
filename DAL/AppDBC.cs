@@ -14,6 +14,7 @@ public class AppDBC : DbContext
         modelBuilder.Entity<Tour>().OwnsOne(t => t.From);
         modelBuilder.Entity<Tour>().OwnsOne(t => t.To);
         
+        modelBuilder.Entity<Tour>().HasMany(t => t.Logs).WithOne(l => l.Tour).HasForeignKey(l => l.TourId).OnDelete(DeleteBehavior.Cascade);
         
     }
 
