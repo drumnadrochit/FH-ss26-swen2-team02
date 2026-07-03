@@ -1,4 +1,15 @@
-import {Component, EventEmitter, model, output, Output, signal} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  input,
+  model,
+  OnChanges,
+  OnInit,
+  output,
+  Output,
+  signal
+} from '@angular/core';
 import {TourDifficultyIndicator} from '../tour-difficulty-indicator/tour-difficulty-indicator';
 import {TourRatingIndicator} from '../tour-rating-indicator/tour-rating-indicator';
 import {TourLogModel} from '../../../models/tour.model';
@@ -16,11 +27,13 @@ import {ButtonType, InputButton} from '../../input-button/input-button';
   templateUrl: './log-list.html',
   styleUrl: './log-list.css',
 })
-export class LogList {
+export class LogList implements OnChanges {
+  ngOnChanges(): void {
+  }
   protected readonly InputType = InputType;
   protected readonly ButtonType = ButtonType;
 
-  logs = model.required<TourLogModel[]>();
+  logs = input.required<TourLogModel[]>();
 
   filteredLogs = signal<TourLogModel[]>([]);
   onAddLog = output({alias: 'onAddLog'})

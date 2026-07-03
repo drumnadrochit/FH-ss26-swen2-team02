@@ -1,4 +1,4 @@
-import {Component, inject, input, model, signal} from '@angular/core';
+import {Component, inject, input, model, OnInit, signal} from '@angular/core';
 import {TourLogModel} from '../../models/tour.model';
 import {form, FormField, FormRoot, max, min, required} from '@angular/forms/signals';
 import {InputField, InputType} from '../../components/input-field/input-field';
@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 import {TourService} from '../../services/tour.service';
 import {TourLogRequestDTO} from '../../models/dto/tour.dto';
+import {TourStore} from '../../stores/tour.store';
 
 export type logCRUD =  Omit<TourLogModel,  "creationDate" >;
 
@@ -25,8 +26,9 @@ export type logCRUD =  Omit<TourLogModel,  "creationDate" >;
   templateUrl: './logs-crud.html',
   styleUrl: './logs-crud.css',
 })
-export class LogsCRUD {
+export class LogsCRUD implements OnInit {
 
+  tourStore = inject(TourStore);
   route = inject(ActivatedRoute)
   router = inject(Router)
   tourService = inject(TourService)
@@ -80,23 +82,37 @@ export class LogsCRUD {
     })
   }
 
-  constructor() {
+  ngOnInit(): void {
+
     this.route.data.subscribe(data => {
       if(data['editMode'])
       {
         this.editMode.set(data['editMode'] as boolean);
       }
     })
-    this.route.params.subscribe((params) => {
-      if (params['tourId']) {
-        this.logModel().tourId = Number(params['tourId']);
-      }
-      if (params['id']) {
-        this.logModel().id = Number(params['id']);
+      this.route.params.subscribe((params) => {
+        const log = this.tourStore.getLog()
+
+        if(log)
+        {
+          this.logModel.set(log);
+        }else{
+          if (params['id']) {
+            this.logModel().id = Number(params['id']);
+            console.log(this.logModel());
+          }
+
+        }
+
+        if (params['tourId']) {
+          this.logModel().tourId = Number(params['tourId']);
+        }
+
         console.log(this.logModel());
+      })
       }
-    })
-  }
+
+
 
   protected readonly InputType = InputType;
 }

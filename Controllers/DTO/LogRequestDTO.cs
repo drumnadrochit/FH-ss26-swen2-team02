@@ -24,6 +24,7 @@ public class LogResponseDTO
 {
     public int? Id { get; set; }
     
+    
     public string Comment { get; set; }
 
     public int Difficulty { get; set; }

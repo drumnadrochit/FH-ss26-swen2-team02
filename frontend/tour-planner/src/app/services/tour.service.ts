@@ -62,9 +62,18 @@ export class TourService {
     return this.http.put<TourLogResponseDTO>(`${this.baseURL}/logs/${logId}`, log, {headers: this.getDefaultHeader()})
   }
 
-  // getTours()
-  // {
-  //   return this.
-  // }
+  exportTours()
+  {
+    return this.http.get(`${this.baseURL}/tours/export`, {responseType: 'blob', headers: this.getDefaultHeader()})
+  }
+
+  importTours(file:File)
+  {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post(`${this.baseURL}/tours/import`,formData, { observe: 'response', headers: this.getDefaultHeader()})
+
+  }
 
 }

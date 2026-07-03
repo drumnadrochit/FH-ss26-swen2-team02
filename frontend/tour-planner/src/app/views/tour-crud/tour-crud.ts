@@ -207,6 +207,7 @@ export class TourCRUD implements AfterViewInit {
         })
       }else{
       this.tourService.createTour(request).subscribe(value => {
+        console.log(value)
         this.router.navigate(['tours'])
       })
 

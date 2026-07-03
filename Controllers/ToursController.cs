@@ -113,7 +113,7 @@ public class ToursController : ControllerBase
       var tours = JsonSerializer.Deserialize<List<TourDTO>>(jsonContent);
       await tourService.ImportTours(tours, GetUserIdFromToken());
           
-      return Ok("Successfully imported tours");
+      return Ok( new {message = "Successfully imported tours"});
     }
     catch (Exception e)
     {

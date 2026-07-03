@@ -1,6 +1,6 @@
-import {inject, Injectable, model, resource, signal} from '@angular/core';
+import {computed, inject, Injectable, model, resource, signal} from '@angular/core';
 import {httpResource} from '@angular/common/http';
-import {TourModel} from '../models/tour.model';
+import {TourLogModel, TourModel} from '../models/tour.model';
 import {TourService} from '../services/tour.service';
 import {firstValueFrom} from 'rxjs';
 
@@ -10,15 +10,30 @@ import {firstValueFrom} from 'rxjs';
 export class TourStore {
   private tourService = inject(TourService);
 
-  // public tours = httpResource<TourModel[]>(() => ({
-  //   url: 'http://localhost:8080/api/tours',
-  //   method: 'GET',
-  //   headers: this.tourService.getDefaultHeader()
-  // }))
-
-  public selectedTour = signal<TourModel | undefined >(undefined);
-
+  public lastSelectedTour = signal<TourModel | undefined >(undefined);
   public tours = signal<TourModel[]>([]);
+
+  private log = signal<TourLogModel | undefined>(undefined);
+
+  public selectedTour = computed(()=>{
+    if(this.lastSelectedTour()){
+      return this.getTour(this.lastSelectedTour()!.id)
+    }
+    return undefined;
+  });
+
+
+  public saveLog(log: TourLogModel){
+    this.log.set(log)
+  }
+
+  public freeLog(){
+    this.log.set(undefined);
+  }
+
+  public getLog(){
+    return this.log();
+  }
 
   public loadTours() {
 
@@ -28,7 +43,6 @@ export class TourStore {
       console.log(error)
     })
 
-    return this.tours()
   }
 
   public getTour(id: number)

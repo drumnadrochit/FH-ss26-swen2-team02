@@ -5,15 +5,16 @@
         <p class="text-center text-sm text-gray-400"> No tour logs available yet. <br> Add new log entry. </p>
       </div>
     }@else {
-      <div class="flex flex-col pr-2 gap-2 h-full overflow-y-scroll ">
+      <div class="flex flex-col pr-2 gap-2 h-full overflow-y-auto scrollbar-thin ">
+
         @if(filteredLogs().length == 0)
         {
-          @for (log of logs() ; track log) {
+          @for (log of logs() ; track log.id) {
             <app-log-list-element (click)="onEdit.emit(log)" [log]="log"></app-log-list-element>
           }
 
         } @else {
-          @for (log of filteredLogs() ; track log) {
+          @for (log of filteredLogs() ; track log.id) {
             <app-log-list-element (click)="onEdit.emit(log)" [log]="log"></app-log-list-element>
           }
         }

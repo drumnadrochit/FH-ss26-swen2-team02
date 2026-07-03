@@ -26,7 +26,7 @@ export class MapService{
   })
 
   init(containerId: string){
-    if (this.map) return;
+    if (this.map) this.map.remove();
 
     this.map = new L.Map(containerId, {
       zoomControl: false,
@@ -43,7 +43,7 @@ export class MapService{
   }
 
   moveTo(location:Location){
-    this.map?.setView([location.latitude, location.longitude],this.map.getZoom(),{animate:true, duration:500})
+    this.map?.setView([location.latitude, location.longitude],this.map.getZoom(),{animate:false})
   }
 
   setCenter(position: LatLng, zoom: number=10){
@@ -56,7 +56,7 @@ export class MapService{
       [bounds[1], bounds[0]],
       [bounds[3], bounds[2]]
     )
-    this.map?.fitBounds(latlngBound, {animate: true,duration:500, paddingTopLeft: point(padding,padding), paddingBottomRight: point(padding,padding)})
+    this.map?.fitBounds(latlngBound, {padding: point(padding,padding)})
   }
 
   setMarker(lat: number, lng: number){

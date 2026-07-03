@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, computed, inject, OnChanges, OnInit, signal} from '@angular/core';
+import {AfterViewInit, Component, computed, effect, inject, OnChanges, OnInit, signal} from '@angular/core';
 import {InputButton} from '../../components/input-button/input-button';
 import {ListElement} from '../../components/tours/list-element/list-element';
 import {TourDetail} from '../../components/tours/tour-detail/tour-detail';
@@ -20,17 +20,20 @@ import {TourStore} from '../../stores/tour.store';
   templateUrl: './tours.html',
   styleUrl: './tours.css',
 })
-export class Tours implements OnInit{
+export class Tours implements OnInit {
   ngOnInit(): void {
-    this.tourStore.loadTours()
+   this.tourStore.loadTours();
   }
+
 
   tourService = inject(TourService);
   tourStore = inject(TourStore);
   router = inject(Router);
 
+
+
   tours = computed(() => {
-    return this.tourStore.loadTours();
+    return this.tourStore.tours();
   })
 
   selectedTour = computed(()=> {
@@ -57,8 +60,40 @@ export class Tours implements OnInit{
   {
     const t = this.tourStore.getTour(tourId)
     if(t != undefined) {
-      this.tourStore.selectedTour.set(t as TourModel)
+      this.tourStore.lastSelectedTour.set(t as TourModel)
     }
 
+  }
+
+  onDownload(event: Event)
+  {
+    this.tourService.exportTours().subscribe((blob: Blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'tours.json';
+
+      link.click();
+
+      window.URL.revokeObjectURL(url)
+    }, error => {
+      console.error("Failed downloading tour export file", error);
+    })
+  }
+
+  onFileSelected(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if(target.files)
+    {
+      const file = target.files[0];
+
+      if(file && file.type == 'application/json')
+      {
+        this.tourService.importTours(file).subscribe((value) => {
+          this.tourStore.loadTours();
+
+        });
+      }
+    }
   }
 }

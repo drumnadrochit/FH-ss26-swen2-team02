@@ -1,8 +1,19 @@
  <div class="w-full h-screen flex p-6 content-stretch">
   <div class="flex h-full gap-3 grow">
     <div class="flex flex-col gap-6 place-content-between shadow-xl p-3 rounded-2xl min-w-75 max-w-75">
+      <div class="flex gap-3 justify-between items-baseline">
       <h1 class="text-center text-gray-400">Tours</h1>
-      <div class="flex flex-col rounded-md p-2 gap-2 overflow-clip overflow-y-scroll grow">
+        <div class="flex gap-3">
+        <div (click)="tours().length > 0 ? onDownload($event) : null"  tabindex="1" [class]="'p-1.5 rounded-md outline-2 w-8 flex items-center justify-center ' + (tours().length > 0 ? 'text-gray-400 hover:text-gray-500 focus:outline-3 focus:text-blue-400 hover:cursor-pointer' : ' text-gray-200')" >
+          <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download-icon lucide-download"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg>
+        </div>
+        <div (click)="fileInput.click()" tabindex="1" class="text-gray-400 hover:text-gray-500 focus:outline-3 focus:text-blue-400 hover:cursor-pointer p-1.5 rounded-md outline-2 w-8 flex items-center justify-center" >
+          <input accept="application/json" hidden #fileInput (change)="onFileSelected($event)" class="hidden"  type="file">
+          <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload-icon lucide-upload"><path d="M12 3v12"/><path d="m17 8-5-5-5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>        </div>
+      </div>
+
+        </div>
+      <div class="flex flex-col rounded-md p-2 gap-2 overflow-clip  grow overflow-y-auto scrollbar-thin">
         @for (tour of tours(); track tour.id) {
           <list-element (elementEdited)="onEdit($event)" [selected]="selectedTour() ? (tour.id == selectedTour()!.id) : false" (elementSelected)="onSelect($event)" [id]="tour.id!" [title]="tour.title" [type]="tour.type" [distance]="tour.distance" [duration]="tour.duration"></list-element>
         }

@@ -1,4 +1,13 @@
-import {Component, computed, inject, model, OnChanges} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  model,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import {TourLogModel, TourModel, TourType} from '../../../models/tour.model';
 import {DatePipe, DecimalPipe} from '@angular/common';
 import {Map} from '../../map/map';
@@ -9,6 +18,7 @@ import {RouteService} from '../../../services/route.service';
 import {TourService} from '../../../services/tour.service';
 import {latLng} from 'leaflet';
 import {Router} from '@angular/router';
+import {TourStore} from '../../../stores/tour.store';
 
 @Component({
   selector: 'tour-detail',
@@ -23,8 +33,10 @@ import {Router} from '@angular/router';
 })
 export class TourDetail implements  OnChanges{
   router = inject(Router)
+  tourStore = inject(TourStore)
+  tour = input.required<TourModel>();
 
-  tour = model.required<TourModel>();
+  // tour = model.required<TourModel>();
   popularity = computed(() => this.tour().logs.length)
   childFriendliness = computed(() => {
     let difficulty = 0;
@@ -59,20 +71,23 @@ export class TourDetail implements  OnChanges{
 
   onEditLog(log:TourLogModel)
   {
+    this.tourStore.saveLog(log)
     this.router.navigate([`/tours/${this.tour().id}/logs/${log.id}`]);
   }
 
   onAddLogPressed(){
+    this.tourStore.freeLog()
+
     this.router.navigate([`/tours/${this.tour().id}/logs/create`]);
   }
 
-  async ngOnChanges(){
+  async ngOnChanges(): Promise<void> {
       let route = await this.routeService.getRoute(
         latLng({lat: this.tour().from.latitude, lng: this.tour().from.longitude}),
-        latLng({lat: this.tour().to.latitude, lng: this.tour().to.latitude})
+        latLng({lat: this.tour().to.latitude, lng: this.tour().to.longitude})
         ,this.tour().type)
       this.mapService.setRoute(route.features);
-      this.mapService.setBounds(route.bbox!, 0)
+      this.mapService.setBounds(route.bbox!, 1)
       // this.mapService.ready.subscribe(async ready => {
       //
       //   })

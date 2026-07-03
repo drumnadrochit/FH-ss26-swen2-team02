@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics;
+using AutoMapper;
 using TourPlanner.API.DTO;
 using TourPlanner.DAL;
 using TourPlanner.Entities;
@@ -37,6 +38,7 @@ public class TourService
             logger.LogInformation($"Added tour {tourReturn.Id} to user {tourReturn.UserId}");
             
             var dto = mapper.Map<TourDTO>(tourReturn);
+            Console.WriteLine(dto);
             return  dto;
 
         }
@@ -99,6 +101,10 @@ public class TourService
     {
         foreach (var dto in tours)
         {
+            foreach (var log in dto.Logs)
+            {
+                log.Id = null;
+            }
             dto.Id = null;
             dto.UserId = userId;
             var tour = mapper.Map<Tour>(dto);

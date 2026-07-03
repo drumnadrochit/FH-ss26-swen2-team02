@@ -28,7 +28,7 @@ export class NumberField implements FormValueControl<number> {
   metric = input<string | undefined>();
 
   displayedValue = computed(()=>{
-    if(this.touched()) return String(this.value())
+    if(this.touched() || this.value() != 0) return String(this.value())
 
     return ""
   })
